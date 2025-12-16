@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👨‍👩‍👧‍👦 Family | Iman Kimm's Portfolio</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Menggunakan pembolehubah CSS (CSS Variables) untuk konsistensi */
+        :root {
+            /* Warna Asas */
+            --dark-red-rose: #8b0000;  
+            --gold-accent: #ffd700;
+            --light-grey-bg: #f5f5f5;
+            --card-bg: white;
+            
+            /* Kod Warna Jantina & Peranan Baru */
+            --male-color: #007bff;     
+            --female-color: #ff69b4;   
+            --main-character-color: #dc3545;   
+            --parent-foundation-color: #6f42c1;   
+            --pet-color: #f0ad4e;      
+        }
+
+        /* --- STYLES FOR FAMILY PHOTO CARD (LARGE) --- */
+        .family-photo-card-large {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            border-radius: 12px; 
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .family-photo-card-large:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .full-family-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .caption-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+            color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .caption-overlay h3 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: var(--gold-accent);
+        }
+
+        .caption-overlay p {
+            margin: 5px 0 0;
+            font-size: 1em;
+            font-style: italic;
+        }
+        
+        /* --- STYLES FOR PYRAMID STRUCTURE --- */
+
+        .family-pyramid-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .pyramid-level {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px; 
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--light-grey-bg);
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+        }
+        
+        .pyramid-level h3 {
+            width: 100%;
+            text-align: center;
+            margin: 0 0 15px 0;
+            color: #444;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .node {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1; 
+        }
+
+        /* --- STYLES FOR INDIVIDUAL CARDS (General) --- */
+        .family-card {
+            background-color: var(--card-bg);
+            border: 1px solid #ddd;
+            border-radius: 12px; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: 220px; 
+            min-height: 330px; 
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid transparent; /* Default */
+        }
+        
+        .family-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* KONTENA POTRET (SEMUA ORANG DAN KUCING) */
+        .card-portrait-container {
+            width: 180px !important; 
+            height: 210px !important; 
+            margin: 0 auto 10px;
+            border-radius: 0 !important; /* Pastikan PETAK */
+            overflow: hidden;
+            border: 4px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* IMEJ ITU SENDIRI */
+        .card-portrait {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            border-radius: 0 !important; /* Pastikan PETAK */
+        }
+
+        .family-card h4 {
+            margin: 8px 0 5px;
+            font-size: 1.1em;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .family-card p {
+            margin: 2px 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        /* --- WARNA BERDASARKAN JANTINA/PERANAN (Gender/Role Based Colors) --- */
+        
+        .is-male .family-card { border-top-color: var(--male-color); }
+        .is-male .card-portrait-container { border-color: var(--male-color); }
+        .is-male h4 { color: var(--male-color); }
+
+        .is-female .family-card { border-top-color: var(--female-color); }
+        .is-female .card-portrait-container { border-color: var(--female-color); }
+        .is-female h4 { color: var(--female-color); }
+        
+        .active-self {
+            border-top: 5px solid var(--main-character-color) !important;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3); 
+        }
+        
+        .active-self .card-portrait-container {
+            border-color: var(--main-character-color) !important;
+        }
+        .active-self h4 {
+            color: var(--main-character-color) !important;
+        }
+        
+        .pyramid-level:first-child h3 {
+            color: var(--parent-foundation-color);
+            border-bottom-color: var(--parent-foundation-color);
+        }
+
+        /* PET CARD STYLING */
+        .is-pet .family-card { border-top-color: var(--pet-color); }
+        .is-pet .card-portrait-container { 
+            border-color: var(--pet-color); 
+            /* Ulangi penentuan saiz dan bentuk untuk kepastian */
+            width: 180px !important; 
+            height: 210px !important; 
+            border-radius: 0 !important;
+        } 
+        .is-pet .card-portrait {
+            /* Pastikan imej kucing adalah 100% dari kontena bersaiz besar */
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 0 !important;
+        }
+        .is-pet h4 { color: var(--pet-color); }
+        
+        /* PET CARD kini mempunyai saiz yang sama dengan KAD AHLI KELUARGA */
+        .pet-card {
+            width: 220px; 
+            min-height: 330px; 
+        }
+        
+        .pet-card h4 {
+            font-size: 1.1em; 
+        }
+        .pet-card p {
+            font-size: 0.9em; 
+        }
+        
+        
+        /* --- STYLES FOR CUSTOM LISTS (INFO LIST) --- */
+        .info-list {
+            list-style: none; /* Buang bullet point default */
+            padding-left: 10px;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 25px; /* Sediakan ruang untuk emoji/icon */
+            margin-bottom: 8px;
+        }
+
+        /* GAYA KHUSUS UNTUK MARKER CUSTOM (EMOJI BINTANG) */
+        .info-list li::before {
+            content: '⭐'; /* MARKER TELAH DITUKAR KEPADA BINTANG */
+            color: var(--gold-accent); /* Menggunakan warna emas untuk bintang */
+            position: absolute;
+            left: 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .pyramid-level {
+                gap: 20px;
+                padding: 15px;
+                margin-bottom: 30px;
+            }
+            .node {
+                min-width: 45%; 
+                margin-bottom: 10px;
+            }
+            .family-card, .pet-card {
+                width: 100%;
+                min-height: 330px; 
+            }
+            /* Saiz skrin kecil untuk semua imej */
+            .card-portrait-container {
+                 width: 180px !important; 
+                 height: 210px !important; 
+                 border-radius: 0 !important; 
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .pyramid-level {
+                gap: 15px;
+            }
+            .node {
+                min-width: 100%; 
+            }
+            /* Saiz skrin amat kecil untuk semua imej */
+             .card-portrait-container {
+                 width: 150px !important; 
+                 height: 180px !important; 
+                 border-radius: 0 !important; 
+            }
+            .family-card, .pet-card {
+                min-height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="small-header"> 
+        <div class="container">
+            <h1>IMAN KIMM</h1> 
+            <h3>Family is Number 1</h3>
+        </div>
+    </header>
+
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="index.html">🏠 Home</a></li>
+                <li><a href="biodata.html">👤 Background</a></li>
+                <li><a href="experience.html">💼 Experience</a></li>
+                <li><a href="education.html">🎓 Education</a></li>
+                <li><a href="family.html" class="active">👨‍👩‍👧‍👦 Family</a></li>
+                <li><a href="gallery.html">🖼️ Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section id="resume-paper">
+            <div class="container">
+                <div class="resume-header">
+                    <h2>Iman Kim's Family</h2>
+                </div>
+                
+                <p class="tagline">This is my Beautiful Family :></p>
+
+                
+                <div class="family-photo-card-large">
+                    <img src="family1.jpg" alt="Gambar Keluarga" class="full-family-photo">
+                    <div class="caption-overlay">
+                        <h3>My family is my everything.</h3>
+                        <p>Glad to be with them.</p>
+                    </div>
+                </div>
+
+                <div class="family-pyramid-container">
+                    
+                    <div class="pyramid-level">
+                        <h3>ABAH AND MAMA</h3>
+                        <div class="node is-male">
+                            <div class="family-card"> 
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="abah.jpg" alt="Father's Portrait">
+                                </div>
+                                <h4>Father</h4>
+                                <p><strong>Name:</strong> MUHAMMAD NOOR BIN MUSA</p>
+                                <p><strong>Date of Birth:</strong> 01/05/1972</p>
+                                <p><strong>Occupation:</strong>Police Officer</p>
+                            </div>
+                        </div>
+                        <div class="node is-female">
+                            <div class="family-card"> 
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="mama.jpg" alt="Mother's Portrait">
+                                </div>
+                                <h4>Mother</h4>
+                                <p><strong>Name:</strong> CHE HASNAH BINTI ABDULLAH</p>
+                                <p><strong>Date of Birth:</strong> 15/08/1976</p>
+                                <p><strong>Occupation:</strong> Business Owner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pyramid-level">
+                        <h3>SISTER / ME / YOUNGER SISTER</h3>
+                        <div class="node is-female">
+                            <div class="family-card">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="mimi.jpg" alt="Elder Sister's Portrait">
+                                </div>
+                                <h4>First Child (Mimi)</h4>
+                                <p><strong>Name:</strong> NORASMIDA</p>
+                                <p><strong>Date of Birth:</strong> 09/01/2000</p>
+                                <p><strong>Occupation:</strong> Event Organizer</p>
+                            </div>
+                        </div>
+                        <div class="node is-male">
+                            <div class="family-card active-self">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="akim.jpg" alt="My Portrait">
+                                </div>
+                                <h4>Second Child (Me)</h4>
+                                <p><strong>Name:</strong> NURIMAN HAKIM</p>
+                                <p><strong>Date of Birth:</strong> 04/03/2005</p>
+                                <p><strong>Occupation:</strong> Student</p>
+                            </div>
+                        </div>
+                        <div class="node is-female">
+                            <div class="family-card">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="lela.jpg" alt="Fourth Child's Portrait">
+                                </div>
+                                <h4>Third Child (Layla)</h4>
+                                <p><strong>Name:</strong> NORSUHAILA</p>
+                                <p><strong>Date of Birth:</strong> 24/10/2007</p>
+                                <p><strong>Occupation:</strong> Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pyramid-level">
+                        <h3>BRO IN LAW / YOUNGER BROTHER / YOUNGEST SISTER</h3>
+                        <div class="node is-male">
+                            <div class="family-card">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="mecha.jpg" alt="Sister's Husband's Portrait">
+                                </div>
+                                <h4>Brother-in-Law</h4>
+                                <p><strong>Name:</strong> AKMAL FITRI</p>
+                                <p><strong>Date of Birth:</strong> 16/12/1997</p>
+                                <p><strong>Occupation:</strong> Engineer</p>
+                            </div>
+                        </div>
+                        <div class="node is-male">
+                            <div class="family-card">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="eqwan.jpg" alt="Third Child's Portrait">
+                                </div>
+                                <h4>Fourth Child (Qwan)</h4>
+                                <p><strong>Name:</strong> NURIMAN EQWAN</p>
+                                <p><strong>Date of Birth:</strong> 03/06/2009</p>
+                                <p><strong>Occupation:</strong> Student</p>
+                            </div>
+                        </div>
+                        <div class="node is-female">
+                            <div class="family-card">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="isha.jpg" alt="Fifth Child's Portrait">
+                                </div>
+                                <h4>Fifth Child (Isha))</h4>
+                                <p><strong>Name:</strong> NORQALISHA</p>
+                                <p><strong>Date of Birth:</strong> 12/09/2013</p>
+                                <p><strong>Occupation:</strong> Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pyramid-level is-pet-level">
+                        <h3>🐾PETS</h3>
+                        <div class="node is-pet">
+                            <div class="family-card pet-card pet">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="oyen.jpg" alt="Cat 1 Portrait">
+                                </div>
+                                <h4>Cat 1 <i class="fas fa-cat"></i></h4>
+                                <p><strong>Name:</strong> OYEN</p>
+                                <p><strong>Date of Birth:</strong> 15/05/2020</p>
+                                <p><strong>Habits:</strong> Eating</p>
+                            </div>
+                        </div>
+                        <div class="node is-pet">
+                            <div class="family-card pet-card pet">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="oreo.jpg" alt="Cat 2 Portrait">
+                                </div>
+                                <h4>Cat 2 <i class="fas fa-cat"></i></h4>
+                                <p><strong>Nama:</strong> OREO</p>
+                                <p><strong>Date of Birth:</strong> 15/05/2020</p>
+                                <p><strong>Habits:</strong> Hiding</p>
+                            </div>
+                        </div>
+                        <div class="node is-pet">
+                            <div class="family-card pet-card pet">
+                                <div class="card-portrait-container">
+                                    <img class="card-portrait" src="olivia.jpg" alt="Cat 3 Portrait">
+                                </div>
+                                <h4>Cat 3 <i class="fas fa-cat"></i></h4>
+                                <p><strong>Nama:</strong> Olivia</p>
+                                <p><strong>Date of Birth:</strong> 10/02/2021</p>
+                                <p><strong>Habits:</strong> Sleeping</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="card family-info-card" style="border-left-color: var(--dark-red-rose); margin-top: 40px; padding: 30px;">
+                    <h2 style="margin-top: 0; border-bottom: 2px solid #ccc; padding-bottom: 30px;"></h2>
+
+                    <h3 style="color: var(--dark-red-rose); margin-top: 30px;">Basic Information</h3>
+                    <ul class="info-list"> 
+                        <li>I am the 2nd child of 5 siblings.</li>
+                        <li>I am like the head after my father; almost everything is decided by me, such as where to go on holiday, the color of our Eid clothes, and even what to eat.</li>
+                        <li>I am the pickiest and most selective child in everything, but I am also the most independent. Mum and Dad always rely on me, and I play the role of an older brother very well.</li>
+                    </ul>
+                    
+                    <h3 style="color: var(--parent-foundation-color); margin-top: 30px;">Top 5 Family Rules</h3>
+                    <ol>
+                        <li>Always honest and loyal in all matters.</li>
+                        <li>To be there when the family needs each other.</li>
+                        <li>Always include the family in prayers.</li>
+                        <li>To preserve and honor the family's reputation.</li>
+                        <li>Do not hold a grudge against each other, and always show love.</li>
+                    </ol>
+
+                    <h3 style="color: var(--male-color); margin-top: 30px;">Favourite Activities</h3>
+                    <ul>
+                        <li>Hiking and exploring new place.</li>
+                        <li>Eating together in one table.</li>
+                        <li>Watching movies or show together.</li>
+                    </ul>
+
+                   
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav id="social-links">
+        <ul>
+            <li><a href="https://www.instagram.com/nrmn._hakim?igsh=MTA2MmxzN2psd2Q1YQ%3D%3D&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.tiktok.com/@nobodylovekims?is_from_webapp=1&sender_device=pc" aria-label="Tik Tok"><i class="fab fa-tiktok"></i></a></li>
+            <li><a href="https://wa.me/01123847394" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/USERNAME_ANDA" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </nav>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 IMAN KIMM. All Rights Reserved.   |  Last Updated: Disember 2025 </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Home | Iman Kimm Resume</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* 1. ANIMATION: Profile Image (Bergerak dari bawah ke posisi asal) */
+        @keyframes slideUpProfile {
+            0% {
+                transform: translateY(100px); /* Bermula 100px di bawah */
+                opacity: 0; /* Bermula secara tersembunyi */
+            }
+            100% {
+                transform: translateY(0); /* Berakhir di posisi asal */
+                opacity: 1; /* Berakhir dengan kelihatan penuh */
+            }
+        }
+
+        /* Terapkan animation kepada kontena imej profil */
+        .profile-img-container {
+            animation: slideUpProfile 1s ease-out forwards; /* 1 saat, bergerak perlahan di akhir, kekal di posisi akhir */
+        }
+        
+        /* 2. ANIMATION: Welcome Text (Bergerak dari kiri ke kanan secara berulang) */
+        @keyframes slideWelcomeText {
+            0% {
+                transform: translateX(-10px); /* Mula sedikit ke kiri */
+            }
+            50% {
+                transform: translateX(10px); /* Bergerak sedikit ke kanan */
+            }
+            100% {
+                transform: translateX(-10px); /* Kembali ke kiri */
+            }
+        }
+
+        /* Terapkan animation kepada H1 */
+        header .container h1 {
+            /* Penting: display: inline-block membenarkan animasi translateX berfungsi dengan betul di dalam container */
+            display: inline-block; 
+            animation: slideWelcomeText 3s ease-in-out infinite alternate; 
+            /* 3 saat, bolak-balik (alternate), dan berulang tanpa henti (infinite) */
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="background-music" autoplay loop muted>
+        <source src="my_bgsound.mp3" type="audio/mp3">
+        Pelayar anda tidak menyokong elemen audio.
+    </audio>
+
+    <header>
+         <div id="header-datetime-container">
+            <div id="live-clock-display" class="header-time-display"></div>
+            <div id="live-date-display" class="header-time-display"></div>
+        </div>
+        <div class="profile-img-container">
+            <img src="gambar_homepage.jpg" alt="Foto Profil Iman Kimm" class="profile-img">
+            <h3>2023696668</h3>
+        </div>
+        <div class="container">
+            <h1>WELCOME TO IMAN KIM'S RESUME :> </h1>
+            
+            <div id="music-controls">
+                <button id="music-toggle-btn" aria-label="Toggle Music">
+                    <i class="fas fa-volume-mute"></i> Music
+                </button>
+            </div>
+            
+        </div>
+    </header>
+
+    <nav id="navbar">
+        
+        <div class="container">
+            
+            <ul>
+                <li><a href="index.html" class="active">🏠 Home</a></li>
+                <li><a href="biodata.html">👤 Background</a></li>
+                <li><a href="experience.html">💼 Experience</a></li>
+                <li><a href="education.html">🎓 Education</a></li>
+                <li><a href="family.html">👨‍👩‍👧‍👦 Family</a></li>
+                <li><a href="gallery.html">🖼️ Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+
+    <nav id="social-links">
+        <ul>
+            <li><a href="https://www.instagram.com/nrmn._hakim?igsh=MTA2MmxzN2psd2Q1YQ%3D%3D&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.tiktok.com/@nobodylovekims?is_from_webapp=1&sender_device=pc" aria-label="Tik Tok"><i class="fab fa-tiktok"></i></a></li>
+            <li><a href="https://wa.me/01123847394" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/nuriman-hakim-498437228" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </nav>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 IMAN KIMM. All Rights Reserved.   |  Last Updated: Disember 2025 </p>
+        </div>
+    </footer>
+
+    <script>
+        const START_TIME = 25; // 0:25 = 25 saat
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('background-music');
+            const toggleButton = document.getElementById('music-toggle-btn');
+            const icon = toggleButton.querySelector('i');
+
+            // Tetapkan masa mula lagu
+            // Kita perlu tunggu sehingga audio metadata dimuatkan
+            audio.addEventListener('loadedmetadata', function() {
+                // Hanya tetapkan masa jika ia belum ditetapkan (cth. jika looping tidak mengubahnya)
+                if (audio.currentTime < 1) { 
+                    audio.currentTime = START_TIME;
+                }
+            }, { once: true }); // Hanya perlu dijalankan sekali
+
+            // Untuk memastikan loop sentiasa bermula pada 0:25, kita gunakan event 'ended'
+            audio.addEventListener('ended', function() {
+                audio.currentTime = START_TIME;
+                audio.play().catch(e => {
+                    // Jika gagal play, ia mungkin kerana pelayar disekat.
+                    // Biarkan muted, dan tunggu klik pengguna
+                });
+            });
+
+
+            // 1. Cuba untuk memainkan secara senyap
+            audio.play().catch(error => {
+                console.log("Autoplay disekat. Pengguna perlu klik untuk main/nyah-senyap.");
+            });
+
+            // 2. Fungsi untuk menogol (toggle) status muzik
+            function toggleMusic() {
+                if (audio.muted) {
+                    // Jika senyap, nyah-senyap dan pastikan ia main
+                    audio.muted = false;
+                    
+                    // Pastikan ia bermula pada 0:25 jika ia baru bermula atau diset semula
+                    if (audio.currentTime < 1) { 
+                        audio.currentTime = START_TIME;
+                    }
+
+                    audio.play().catch(e => {
+                        console.error("Gagal memainkan audio:", e);
+                    });
+                    icon.className = 'fas fa-volume-up'; // Tukar ikon kepada 'Volume Up'
+                } else {
+                    // Jika tidak senyap, senyapkan
+                    audio.muted = true;
+                    icon.className = 'fas fa-volume-mute'; // Tukar ikon kepada 'Mute'
+                }
+            }
+
+            // 3. Tambah event listener pada butang
+            toggleButton.addEventListener('click', toggleMusic);
+            
+            // 4. Jika pengguna berinteraksi (untuk kali pertama), cuba pastikan audio mula bermain
+            document.addEventListener('click', function tryPlay() {
+                if (audio.paused) {
+                    // Pastikan ia bermula pada 0:25 jika ia baru bermula 
+                    if (audio.currentTime < 1) { 
+                        audio.currentTime = START_TIME;
+                    }
+                    audio.play().catch(e => {}); 
+                }
+                document.removeEventListener('click', tryPlay);
+            });
+
+            // =========================================================
+            // FUNGSI JAVASCRIPT BARU: LIVE CLOCK & DATE (TARGETING HEADER)
+            // =========================================================
+            function updateTimeAndDate() {
+                const now = new Date();
+                
+                // 1. Live Clock (Untuk Header - Atas) - Hanya Jam Minit Saat
+                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                const timeString = now.toLocaleTimeString('en-US', timeOptions);
+                const clockElement = document.getElementById('live-clock-display');
+                if (clockElement) {
+                    clockElement.innerHTML = `<i class="fas fa-clock"></i> ${timeString}`;
+                }
+
+                // 2. Hari & Tarikh Penuh (Untuk Header - Bawah) - Hari, Tarikh, Bulan, Tahun
+                const dateOptions = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+                // Menggunakan bahasa Melayu (ms-MY) untuk format tarikh penuh
+                const dateString = now.toLocaleDateString('ms-MY', dateOptions); 
+                const dateElement = document.getElementById('live-date-display');
+                if (dateElement) {
+                    dateElement.innerHTML = `<i class="fas fa-calendar-alt"></i> ${dateString}`;
+                }
+            }
+
+            // Kemas kini jam serta-merta apabila dimuatkan
+            updateTimeAndDate();
+            
+            // Kemas kini setiap 1 saat
+            setInterval(updateTimeAndDate, 1000);
+            
+        });
+    </script>
+</body>
+</html>

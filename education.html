@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Education | Iman Kimm's Portfolio</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+     <style>
+    /* --- GAYA KHUSUS JADUAL RESPONSIF (Ko-Kurikulum) --- */
+    .table-responsive {
+        overflow-x: auto; /* Memastikan jadual boleh discroll secara mendatar pada mobile */
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .responsive-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 0.95em;
+        min-width: 600px; /* Lebar minimum untuk mengelakkan runtuh pada desktop */
+    }
+
+    .responsive-table thead tr {
+        /* Menggunakan warna dari style.css yang dihubungkan */
+        background-color: var(--dark-red-rose); 
+        color: var(--text-light);
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .responsive-table th, 
+    .responsive-table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .responsive-table tbody tr {
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.3s;
+    }
+
+    .responsive-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .responsive-table tbody tr:last-of-type {
+        border-bottom: 2px solid var(--dark-red-rose);
+    }
+
+    .responsive-table tbody tr:hover {
+        background-color: #f0e6e6; /* Warna hover ringan */
+    }
+
+    .download-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        /* Menggunakan warna dari style.css yang dihubungkan */
+        background-color: var(--sky-blue); 
+        color: var(--deep-maroon);
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 0.9em;
+        transition: background-color 0.3s;
+    }
+
+    .download-btn:hover {
+        background-color: #5bb3d6;
+    }
+
+    /* TABLE RESPONSIVE: Stack columns on smaller screens */
+    @media (max-width: 767px) {
+        .responsive-table {
+            min-width: 100%; 
+            border: none;
+        }
+
+        .responsive-table thead {
+            display: none; /* Sembunyikan header jadual pada mobile */
+        }
+
+        .responsive-table, 
+        .responsive-table tbody, 
+        .responsive-table tr, 
+        .responsive-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .responsive-table tr {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .responsive-table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            border: none;
+        }
+        
+        .responsive-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            width: calc(50% - 30px);
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            color: var(--dark-red-rose);
+            text-align: left;
+        }
+        
+        .download-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <header class="small-header"> 
+        <div class="container">
+            <h1>IMAN KIMM</h1> 
+            <h3>Educational Background</h3>
+        </div>
+    </header>
+
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="index.html">🏠 Home</a></li>
+                <li><a href="biodata.html">👤 Background</a></li>
+                <li><a href="experience.html">💼 Experience</a></li>
+                <li><a href="education.html" class="active">🎓 Education</a></li>
+                <li><a href="family.html">👨‍👩‍👧‍👦 Family</a></li>
+                <li><a href="gallery.html">🖼️ Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section id="education-section">
+            <div id="resume-paper" class="container"> 
+                
+                <div class="resume-header">
+                    <h2><i class="fas fa-graduation-cap"></i> ACADEMIC HISTORY</h2>
+                </div>
+                
+                <div class="edu-list-container">
+
+                    <div class="edu-item">
+                        <div class="edu-content">
+                            <div class="card">
+                                <h3>DIPLOMA IN SCIENCE INFORMATION (SI)</h3>
+                                <h4>UNIVERSITI TEKNOLOGI MARA (UiTM) SEGAMAT, JOHORE BRANCH</h4>
+                                <span class="period"><i class="far fa-calendar-alt"></i> SEPT 2023 - FEBRUARY 2026 (Expected)</span>
+                                
+                                <p><strong><i class="fas fa-book-open"></i> Brief Information:</strong></p>
+                                <ul class="info-list">
+                                    <li>Qualified for studies in information management and information technology.</li>
+                                    <li>Course focus includes database, web programming, records and archives management, and data analysis.</li>
+                                </ul>
+
+                                <p class="period" style="margin-top: 20px;"><strong><i class="fas fa-chart-line"></i> Academic Achievements by Semester (Total 5 Sem):</strong></p>
+                                <ul class="info-list info-result">
+                                    <li>Semester 1: GPA 3.80 (Dean's List Award)</li>
+                                    <li>Semester 2: GPA 3.53 (Dean's List Award)</li>
+                                    <li>Semester 3: GPA 3.44 </li>
+                                    <li>Semester 4: GPA 3.61 (Dean's List Award)</li>
+                                    <li>Semester 5: - </li>
+                                </ul>
+                                <ul class="info-list info-result" style="margin-top: 10px;">
+                                    <li>CURRENT CGPA : 3.59 / 4.00 </li>
+                                    <li>STATUS: First Class </li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="edu-media">
+                            <div class="edu-img-container">
+                                <img src="uitm.jpg" alt="Image of UiTM campus">
+                            </div>
+                            <div class="map-container">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.057367048119!2d102.72672767496866!3d2.4879643974907046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ce2c6ce929a871%3A0xc0dfa5fe6922a589!2sUiTM%20Cawangan%20Johor%2C%20Kampus%20Segamat!5e0!3m2!1sms!2smy!4v1765740029540!5m2!1sms!2smy" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <a href="https://maps.app.goo.gl/hGzN2bL3J6Hw3kP29" target="_blank" class="map-link">
+                                <i class="fas fa-map-marker-alt"></i> Open UiTM Segamat Location on Google Maps
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div class="edu-item">
+                        <div class="edu-content">
+                            <div class="card">
+                                <h3>SECONDARY SCHOOL</h3>
+                                <h4>SEKOLAH MENENGAH KEBANGSAAN SEKSYEN 19 SHAH ALAM, SELANGOR</h4>
+                                <span class="period"><i class="far fa-calendar-alt"></i> 2018 - 2022</span>
+                                
+                                <p><strong><i class="fas fa-book-open"></i> Brief Information:</strong></p>
+                                <ul class="info-list">
+                                    <li>Stream: Pure Science</li>
+                                    <li>Co-Curriculum: Committee Member of the School Police Cadet Unit / Recreation Club / Bowling Club.</li>
+                                    <li>Roles: Library Resource Centre Prefect (Head of Computer Lab)</li>
+                                </ul>
+                                
+                                <p class="period" style="margin-top: 20px;"><strong><i class="fas fa-award"></i> SPM 2022 Subject Results:</strong></p>
+                                <ul class="info-list info-result">
+                                    <li>Malay Language: B+</li>
+                                    <li>History: A</li>
+                                    <li>Islamic Education: B+</li>
+                                    <li>English Language: A</li>
+                                    <li>Mathematics: A</li>
+                                    <li>Computer Science: B+</li>
+                                    <li>Physics: C+</li>
+                                    <li>Chemistry: E</li>
+                                    <li>Add Math: - </li>
+                                    <li style="margin-top: 10px;">FULL RESULT: 3A, 3B+, 1C+, 1E</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="edu-media">
+                            <div class="edu-img-container">
+                                <img src="smks19.jpg" alt="Image of high school">
+                            </div>
+                            <div class="map-container">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1623044167504!2d101.53043657472989!3d3.0511790969246184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d5dbc50246b%3A0x22cdeb68a32490a0!2sSMK%20SEKSYEN%2019%2C%20SHAH%20ALAM!5e0!3m2!1sms!2smy!4v1765741258004!5m2!1sms!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                             <a href="https://maps.app.goo.gl/tH7H1p8rW4XhM9z7A" target="_blank" class="map-link">
+                                <i class="fas fa-map-marker-alt"></i> Open SMK Seksyen 19 Location on Google Maps
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="edu-item">
+                        <div class="edu-content">
+                            <div class="card">
+                                <h3>PRIMARY SCHOOL</h3>
+                                <h4>SEKOLAH RENDAH AGAMA INTERGRASI SEKSYEN 19</h4>
+                                <span class="period"><i class="far fa-calendar-alt"></i> 2012 - 2017</span>
+                                
+                                <p><strong><i class="fas fa-book-open"></i> Brief Information:</strong></p>
+                                <ul class="info-list">
+                                    <li>Class: Academic + Religion</li>
+                                    <li>Sports: Football MSSD</li>
+                                    <li>Achievement: Marhaban Leader for Petaling Stage</li>
+                                </ul>
+                                
+                                <p class="period" style="margin-top: 20px;"><strong><i class="fas fa-award"></i> Main Examination Results:</strong></p>
+                                
+                                <h4 style="margin: 10px 0 5px 0; color: var(--deep-maroon);">UPSR 2017 (Primary School Achievement Test)</h4>
+                                <ul class="info-list info-result" style="font-size: 0.95em;">
+                                    <li>Core Subjects: Malay Language (Comprehension), Malay Language (Writing), English Language, Mathematics, Science.</li>
+                                    <li>Result: 3A, 1B, 2C</li>
+                                </ul>
+                                
+                                <h4 style="margin: 15px 0 5px 0; color: var(--deep-maroon);">UPKK 2016 (KAFA Class Assessment Test)</h4>
+                                <ul class="info-list info-result" style="font-size: 0.95em;">
+                                    <li>Core Subjects: Al-Quran & Hadith, Ulum Syar'iyyah (Aqidah & Fiqh), Jawi & Calligraphy, Adab (Ethics), Sirah (Prophet's Biography).</li>
+                                    <li>Result: 8A</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="edu-media">
+                            <div class="edu-img-container">
+                                <img src="srai19.jpg" alt="Image of primary school">
+                            </div>
+                            <div class="map-container">
+                               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1552097048575!2d101.52961027472993!3d3.0530925969226996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d5c77455645%3A0xd6ee94a9c35d6c86!2sSekolah%20Rendah%20Agama%20Integrasi%20Seksyen%2019!5e0!3m2!1sms!2smy!4v1765742473166!5m2!1sms!2smy" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <a href="https://maps.app.goo.gl/3K1r85fE9r1eP5vE7" target="_blank" class="map-link">
+                                <i class="fas fa-map-marker-alt"></i> Open SRAI Seksyen 19 Location on Google Maps
+                            </a>
+                        </div>
+                    </div>
+                
+                </div> 
+            </div>
+         <div class="separator"></div>
+<div class="table-responsive">
+    <h2><i class="fas fa-trophy"></i> ACHIEVEMENTS</h2>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>YEAR</th>
+                <th>TITLE</th>
+                <th>STAGE</th>
+                <th>ACHIEVEMENT</th>
+                <th style="text-align: center;">CERTIFICATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="TAHUN">2025</td>
+                <td data-label="ACARA / AKTIVITI">Sijil Dekan Semester 4</td>
+                <td data-label="PERINGKAT">UiTM</td>
+                <td data-label="PENCAPAIAN">DEAN LIST</td>
+                <td data-label="SIJIL" style="text-align: center;">
+                    <a href="sijil5.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> UiTM Dean List
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="TAHUN">2020</td>
+                <td data-label="ACARA / AKTIVITI">SIJIL PENYERTAAN PERTANDINGAN KUIZ BADAN BERUNIFORM</td>
+                <td data-label="PERINGKAT">NEGERI</td>
+                <td data-label="PENCAPAIAN">THIRD PLACE</td>
+                <td data-label="SIJIL" style="text-align: center;">
+                    <a href="sijil3.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> Quiz Uniform Body
+                    </a>
+                </td>
+            </tr>
+             <tr>
+                <td data-label="TAHUN">2025</td>
+                <td data-label="ACARA / AKTIVITI">Internship Completion</td>
+                <td data-label="PERINGKAT">MetTube Sdn. Bhd.</td>
+                <td data-label="PENCAPAIAN">EXCELLENT</td>
+                <td data-label="SIJIL" style="text-align: center;">
+                    <a href="sijil4.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> MetTube
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td data-label="TAHUN">2025</td>
+                <td data-label="ACARA / AKTIVITI">PTPTN ESPORTS CHALLENGE</td>
+                <td data-label="PERINGKAT">PTPTN</td>
+                <td data-label="PENCAPAIAN">HEAD REFEREE</td>
+                <td data-label="SIJIL" style="text-align: center;">
+                    <a href="sijil1.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> PTPTN
+                    </a>
+                </td>
+            </tr>
+             <tr>
+                <td data-label="TAHUN">2025</td>
+                <td data-label="ACARA / AKTIVITI">TRANSKRIP UiTM</td>
+                <td data-label="PERINGKAT">UiTM</td>
+                <td data-label="PENCAPAIAN">Dean List</td>
+                <td data-label="SIJIL" style="text-align: center;">
+                    <a href="sijil2.pdf" download class="download-btn">
+                        <i class="fas fa-download"></i> UiTM Transcript
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+        </section>
+    </main>
+
+    <nav id="social-links">
+        <ul>
+            <li><a href="https://www.instagram.com/nrmn._hakim?igsh=MTA2MmxzN2psd2Q1YQ%3D%3D&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.tiktok.com/@nobodylovekims?is_from_webapp=1&sender_device=pc" aria-label="Tik Tok"><i class="fab fa-tiktok"></i></a></li>
+            <li><a href="https://wa.me/01123847394" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/USERNAME_ANDA" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </nav>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 IMAN KIMM. All Rights Reserved.   |  Last Updated: Disember 2025 </p>
+        </div>
+    </footer>
+
+</body>
+</html>

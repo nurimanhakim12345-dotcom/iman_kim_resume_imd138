@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🖼️ Galeri | Portfolio Iman Kimm</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Tetapkan pembolehubah warna penting dari style.css untuk rujukan gallery CSS */
+        :root {
+            --dark-red-rose: #880D1E; 
+            --deep-maroon: #4D0711;
+            --text-light: #ffffff; /* Tambah dari style.css */
+        }
+
+        /* ----------------------- */
+        /* 1. GALLERY GRIDS (Untuk susunan Album dan Foto) */
+        /* ----------------------- */
+        
+        /* Photo Grid untuk 9 foto dalam album (kekal responsif) */
+        .photo-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        /* Susunan Baru: Kontena utama untuk 5 album (3 atas, 2 bawah) */
+        .album-layout-container {
+            margin-top: 30px;
+        }
+
+        /* Jarak antara baris album */
+        .album-row {
+            margin-bottom: 20px; 
+        }
+
+        /* Baris Atas (3 Album) - Tetapkan 3 kolum untuk desktop */
+        .album-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px;
+        }
+
+        /* Baris Bawah (2 Album) - Wrapper untuk fungsi CENTERING */
+        .album-row-2-wrapper {
+            display: flex;
+            justify-content: center; /* PENTING: Untuk memusatkan baris 2 */
+        }
+
+        /* Baris Bawah (2 Album) - Grid sebenar yang memegang album */
+        .album-row-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 kolum */
+            gap: 20px;
+            /* Hadkan lebar untuk mewujudkan kesan 'piramid terbalik' */
+            max-width: 700px; /* Saiz yang sesuai untuk 2 item berbanding 3 di atas */
+            width: 100%;
+        }
+
+        /* Gaya item album (konsisten) */
+        .album-item, .photo-item {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .album-item:hover, .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Gaya Thumbnails */
+        .album-item a, .photo-item img {
+            display: block; 
+        }
+
+        .album-item img, .photo-item img {
+            width: 100%;
+            height: 200px; /* Saiz tetap untuk thumbnail */
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .caption, .photo-caption {
+            padding: 10px;
+            font-size: 0.9em;
+            color: var(--deep-maroon, #4D0711); 
+            font-weight: 500;
+        }
+
+        /* Media Query untuk Responsif (skrin kecil/mobile) */
+        @media (max-width: 1000px) {
+            /* Benarkan kedua-dua baris menggunakan grid auto-fit (boleh jadi 2 atau 1 kolum) */
+            .album-row-3, .album-row-2 {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            /* Matikan fungsi centering dan had lebar pada skrin kecil */
+            .album-row-2-wrapper {
+                display: block; 
+            }
+            .album-row-2 {
+                max-width: none;
+                width: 100%;
+            }
+        }
+        
+        /* ----------------------- */
+        /* 3. GAYA KHUSUS UNTUK BUTANG MUZIK (TAMBAHAN BAHARU) */
+        /* ----------------------- */
+
+        /* Container untuk tajuk & butang */
+        .gallery-header-container {
+            display: flex;
+            justify-content: space-between; /* Pisahkan tajuk dan butang */
+            align-items: center;
+            border-bottom: 3px solid var(--dark-red-rose);
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Tetapkan gaya untuk tajuk utama */
+        .gallery-header-container h2 {
+            margin: 0;
+            text-align: left; /* Mengatasi text-align: center dari resume-header */
+            border-bottom: none;
+        }
+
+        /* Gaya Butang Muzik */
+        #music-toggle-btn {
+            background-color: var(--dark-red-rose);
+            color: var(--text-light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #music-toggle-btn:hover {
+            background-color: var(--deep-maroon);
+        }
+
+        #music-toggle-btn i {
+            font-size: 1.1em;
+        }
+
+        /* ----------------------- */
+        /* 4. MODAL / LIGHTBOX (FUNGSI ZOOM) - KEKAL SAMA */
+        /* ----------------------- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.9); 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 90%; 
+            max-height: 90vh; 
+            text-align: center;
+        }
+
+        .modal-image {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 95vw; 
+            max-height: 85vh; 
+            margin: 0 auto; 
+            border-radius: 5px;
+            object-fit: contain; 
+        }
+
+        #modalCaption {
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--dark-red-rose);
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="gallery-music" loop>
+        <source src="my_bgsound2.mp3" type="audio/mp3">
+        Pelayar anda tidak menyokong elemen audio.
+    </audio>
+
+    <header>
+        <div class="container">
+            <h1>🖼️ My Gallery</h1>
+        </div>
+    </header>
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="index.html">🏠 Home</a></li>
+                <li><a href="biodata.html">👤 Background</a></li>
+                <li><a href="experience.html">💼 Experience</a></li>
+                <li><a href="education.html">🎓 Education</a></li>
+                <li><a href="family.html">👨‍👩‍👧‍👦 Family</a></li>
+                <li><a href="gallery.html" class="active">🖼️ Gallery</a></li> 
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <section id="gallery-section">
+            <div id="resume-paper" class="container" style="max-width: 1100px; padding: 30px;">
+                
+                <div id="dynamic-content">
+                    </div>
+                
+            </div>
+        </section>
+    </main>
+
+    <div id="imageModal" class="modal">
+        <span class="close-btn">&times;</span>
+        <div class="modal-content">
+            <img class="modal-image" id="modalImage" src="">
+            <div id="modalCaption"></div>
+        </div>
+    </div>
+
+    <nav id="social-links">
+        <ul>
+            <li><a href="https://www.instagram.com/nrmn._hakim?igsh=MTA2MmxzN2psd2Q1YQ%3D%3D&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.tiktok.com/@nobodylovekims?is_from_webapp=1&sender_device=pc" aria-label="Tik Tok"><i class="fab fa-tiktok"></i></a></li>
+            <li><a href="https://wa.me/01123847394" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/USERNAME_ANDA" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </nav>
+    <footer>
+        <div class="container">
+            <p>&copy;2025 IMAN KIMM. All Rights Reserved.   |  Last Updated: Disember 2025 </p>
+        </div>
+    </footer>
+    
+    <script>
+        // =========================================================================
+        // 1. DATA ALBUM (5 ALBUM DENGAN 9 FOTO SETIAP SATU)
+        // (Data kekal sama seperti versi 3-2 yang terakhir)
+        // =========================================================================
+        
+        const albums = {
+            'convocation': {
+                title: 'MEEEEE AKA SIR IMAN KIM THE GOAT',
+                description: 'Collection of my picture',
+                cover: 'me1.jpg', 
+                photos: [
+                    { thumb: 'me2.jpg', full: 'me2.jpg', caption:''  },
+                    { thumb: 'me3.jpg', full: 'me3.jpg', caption: '' },
+                    { thumb: 'me4.jpg', full: 'me4.jpg', caption: '' },
+                    { thumb: 'me5.jpg', full: 'me5.jpg', caption: '' },
+                    { thumb: 'me6.jpg', full: 'me6.jpg', caption:''  },
+                    { thumb: 'me7.jpg', full: 'me7.jpg', caption:''  },
+                    { thumb: 'me8.jpg', full: 'me8.jpg', caption: '' },
+                    { thumb: 'me9.jpg', full: 'me9.jpg', caption: '' },
+                    { thumb: 'me10.jpg', full: 'me10.jpg', caption: '' }
+                ]
+            },
+            'study_life': {
+                title: 'Homies and Brotherhood and some girl that been important for me.',
+                description: 'Photos collection of me and my friends',
+                cover: 'fr1.jpg',
+                photos: [
+                     { thumb: 'fr2.jpg', full: 'fr2.jpg', caption:''  },
+                    { thumb: 'fr3.jpg', full: 'fr3.jpg', caption: '' },
+                    { thumb: 'fr4.jpg', full: 'fr4.jpg', caption: '' },
+                    { thumb: 'fr5.jpg', full: 'fr5.jpg', caption: '' },
+                    { thumb: 'fr6.jpg', full: 'fr6.jpg', caption:''  },
+                    { thumb: 'fr7.jpg', full: 'fr7.jpg', caption:''  },
+                    { thumb: 'fr8.jpg', full: 'fr8.jpg', caption: '' },
+                    { thumb: 'fr9.jpg', full: 'fr9.jpg', caption: '' },
+                    { thumb: 'fr10.jpg', full: 'fr10.jpg', caption: '' }
+                ]
+            },
+            'family_and_hobby': {
+                title: 'Family Muhammad Noor and Che Hasnah',
+                description: 'Me and my family together',
+                cover: 'fm1.jpg',
+                photos: [
+                    { thumb: 'fm2.jpg', full: 'fm2.jpg', caption:''  },
+                    { thumb: 'fm3.jpg', full: 'fm3.jpg', caption: '' },
+                    { thumb: 'fm4.jpg', full: 'fm4.jpg', caption: '' },
+                    { thumb: 'fm5.jpg', full: 'fm5.jpg', caption: '' },
+                    { thumb: 'fm6.jpg', full: 'fm6.jpg', caption:''  },
+                    { thumb: 'fm7.jpg', full: 'fm7.jpg', caption:''  },
+                    { thumb: 'fm8.jpg', full: 'fm8.jpg', caption: '' },
+                    { thumb: 'fm9.jpg', full: 'fm9.jpg', caption: '' },
+                    { thumb: 'fm10.jpg', full: 'fm10.jpg', caption: '' }
+                ]
+            },
+            'projects': { 
+                title: 'Sweetheart',
+                description: 'I LOVE THEM',
+                cover: 'sw1.jpg', 
+                photos: [
+                    { thumb: 'sw2.jpg', full: 'sw2.jpg', caption:''  },
+                    { thumb: 'sw3.jpg', full: 'sw3.jpg', caption: '' },
+                    { thumb: 'sw4.jpg', full: 'sw4.jpg', caption: '' },
+                    { thumb: 'sw5.jpg', full: 'sw5.jpg', caption: '' },
+                    { thumb: 'sw6.jpg', full: 'sw6.jpg', caption:''  },
+                    { thumb: 'sw7.jpg', full: 'sw7.jpg', caption:''  },
+                    { thumb: 'sw8.jpg', full: 'sw8.jpg', caption: '' },
+                    { thumb: 'sw9.jpg', full: 'sw9.jpg', caption: '' },
+                    { thumb: 'sw10.jpg', full: 'sw10.jpg', caption: '' }
+                ]
+            },
+            'travel': { 
+                title: 'Views and Healing',
+                description: 'Take a breath and RELAX',
+                cover: 'hl1.jpg', 
+                photos: [
+                     { thumb: 'hl2.jpg', full: 'hl2.jpg', caption:''  },
+                    { thumb: 'hl3.jpg', full: 'hl3.jpg', caption: '' },
+                    { thumb: 'hl4.jpg', full: 'hl4.jpg', caption: '' },
+                    { thumb: 'hl5.jpg', full: 'hl5.jpg', caption: '' },
+                    { thumb: 'hl6.jpg', full: 'hl6.jpg', caption:''  },
+                    { thumb: 'hl7.jpg', full: 'hl7.jpg', caption:''  },
+                    { thumb: 'hl8.jpg', full: 'hl8.jpg', caption: '' },
+                    { thumb: 'hl9.jpg', full: 'hl9.jpg', caption: '' },
+                    { thumb: 'hl10.jpg', full: 'hl10.jpg', caption: '' }
+                ]
+            }
+        };
+
+        const contentArea = document.getElementById('dynamic-content');
+
+        // Helper function untuk membina HTML item album
+        function createAlbumItem(id, album) {
+            return `
+                <div class="album-item">
+                    <a href="#" onclick="loadAlbum('${id}'); return false;">
+                        <img src="${album.cover}" alt="${album.title}">
+                    </a>
+                    <div class="caption">${album.title} - click me</div>
+                </div>
+            `;
+        }
+
+        // =========================================================================
+        // 2. FUNGSI MUATAN DINAMIK (DIUBAH UNTUK TAMBAH BUTANG MUZIK)
+        // =========================================================================
+
+        function showGallery() {
+            const albumKeys = Object.keys(albums);
+            
+            let html = `
+                <div class="gallery-header-container">
+                    <h2 class="resume-header">MY ALBUM COLLECTION</h2>
+                    <button id="music-toggle-btn"><i class="fas fa-play"></i> Main Muzik</button>
+                </div>
+                <div class="album-layout-container">
+            `;
+
+            // Baris 1: 3 album teratas (convocation, study_life, family_and_hobby)
+            html += '<div class="album-row album-row-3">';
+            for (let i = 0; i < 3; i++) {
+                const id = albumKeys[i];
+                const album = albums[id];
+                html += createAlbumItem(id, album);
+            }
+            html += '</div>';
+
+            // Baris 2: 2 album terbawah (projects, travel) - Dibalut untuk centering
+            html += '<div class="album-row-2-wrapper">'; 
+            html += '<div class="album-row album-row-2">'; 
+            for (let i = 3; i < 5; i++) {
+                const id = albumKeys[i];
+                const album = albums[id];
+                html += createAlbumItem(id, album);
+            }
+            html += '</div>'; // Tutup album-row-2
+            html += '</div>'; // Tutup album-row-2-wrapper
+
+            html += '</div>'; // Tutup album-layout-container
+
+            contentArea.innerHTML = html;
+            
+            // Panggil fungsi pengaktifan muzik selepas HTML dimuatkan
+            activateMusicButton();
+        }
+
+        function loadAlbum(albumId) {
+            const album = albums[albumId];
+            if (!album) {
+                contentArea.innerHTML = '<p>Album tidak ditemui.</p>';
+                return;
+            }
+
+            // Nota: Music button tidak kelihatan di sini, hanya di paparan Galeri utama
+            let html = `
+                <h2 class="resume-header" style="text-align: left; border-bottom: 3px solid var(--dark-red-rose);">
+                    <a href="#" onclick="showGallery(); return false;" style="font-size: 0.8em; text-decoration: none; color: var(--dark-red-rose); margin-right: 15px;">
+                        <i class="fas fa-arrow-left"></i> back to gallery
+                    </a>
+                    ${album.title}
+                </h2>
+                <p style="margin-bottom: 25px; font-style: italic;">${album.description}</p>
+                <div class="photo-grid"> 
+            `;
+
+            // Bina HTML untuk 9 foto dalam album
+            album.photos.forEach((photo, index) => {
+                html += `
+                    <div class="photo-item">
+                        <img src="${photo.thumb}" 
+                             alt="${photo.caption}" 
+                             onclick="openModal('${photo.full}', '${photo.caption}')" 
+                             style="cursor: pointer;">
+                        <p class="photo-caption">${index + 1}. ${photo.caption}</p>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            contentArea.innerHTML = html;
+            window.scrollTo(0, 0); 
+        }
+        
+        // =========================================================================
+        // 3. FUNGSI KAWALAN MUZIK (BAHARU)
+        // =========================================================================
+        
+        // Pemboleh ubah audio diakses secara global
+        const audio = document.getElementById('gallery-music');
+        
+        // Gunakan pemboleh ubah untuk status muzik
+        let isMusicPlaying = false; 
+
+        function activateMusicButton() {
+            const musicBtn = document.getElementById('music-toggle-btn');
+            if (!musicBtn) return; // Keluar jika butang tidak wujud
+
+            // Tetapkan status awal berdasarkan pemboleh ubah (untuk navigasi Kembali)
+            if (isMusicPlaying) {
+                 musicBtn.innerHTML = '<i class="fas fa-pause"></i> Jeda Muzik';
+            } else {
+                 musicBtn.innerHTML = '<i class="fas fa-play"></i> Play Me';
+            }
+
+            musicBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        musicBtn.innerHTML = '<i class="fas fa-pause"></i> Shut Up';
+                        isMusicPlaying = true;
+                    }).catch(error => {
+                        alert("Muzik tidak dapat dimainkan. Sila pastikan pelayar anda membenarkan 'autoplay'.");
+                        console.error("Gagal mainkan audio:", error);
+                    });
+                } else {
+                    audio.pause();
+                    musicBtn.innerHTML = '<i class="fas fa-play"></i> Main Muzik';
+                    isMusicPlaying = false;
+                }
+            });
+        }
+        
+        // =========================================================================
+        // 4. FUNGSI MODAL ZUM (LightBox) - KEKAL SAMA
+        // =========================================================================
+        
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const closeBtn = document.querySelector('.close-btn');
+
+        window.openModal = function(imageSrc, captionText) {
+            modal.style.display = "flex";
+            modalImg.src = imageSrc;
+            modalCaption.innerHTML = captionText;
+        }
+        
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // =========================================================================
+        // 5. MULA PADA MASA MUATAN
+        // =========================================================================
+        document.addEventListener('DOMContentLoaded', showGallery);
+    </script>
+    
+</body>
+</html>
